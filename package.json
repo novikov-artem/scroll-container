@@ -1,0 +1,25 @@
+{
+  "name": "scroll-container",
+  "version": "1.0.0",
+  "description": "Scroll container based on css and web components",
+  "main": "element.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/novikov-artem/scroll-container.git"
+  },
+  "keywords": [
+    "web-components",
+    "js",
+    "css",
+    "web"
+  ],
+  "author": "Artem Novikov <artmore398@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/novikov-artem/scroll-container/issues"
+  },
+  "homepage": "https://github.com/novikov-artem/scroll-container#readme"
+}
