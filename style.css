@@ -1,0 +1,48 @@
+scroll-container {
+    --item-size: 100%;
+    --item-bg: var(--clr-placeholder);
+    --items-offset: 1.5rem;
+    --scroller-bg: transparent;
+
+    display: flex;
+    overflow-x: scroll;
+    flex: 0 0 100%;
+
+    -webkit-overflow-scrolling: touch;
+    -webkit-scroll-snap-type: mandatory;
+    -ms-scroll-snap-type: mandatory;
+    scroll-snap-type: mandatory;
+    -webkit-scroll-snap-points-x: repeat(100%);
+    -ms-scroll-snap-points-x: repeat(100%);
+    scroll-snap-points-x: repeat(100%);
+    scroll-snap-type: x mandatory;
+
+    background-color: var(--scroller-bg);
+}
+scroll-container[scrollbar="false"] {
+    scrollbar-width: none;
+}
+scroll-container[scrollbar="false"]::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+scroll-container .scroll-item {
+    display: flex;
+    flex: 0 0 var(--item-size, 100%);
+    flex-direction: column;
+
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    scroll-snap-align: center;
+
+    background-color: var(--item-bg, transparent);
+}
+
+scroll-container .scroll-item + .scroll-item {
+    margin-left: var(--items-offset, 1rem);
+}
