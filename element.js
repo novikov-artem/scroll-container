@@ -4,6 +4,18 @@ export default class ScrollContainer extends HTMLElement {
 
         this._items = [];
         this._observer = null;
+
+    }
+
+    get threshold() {
+        let val = '0.6';
+
+        let hasAttr = this.getAttribute('threshhold');
+        if( hasAttr ) {
+            val = parseFloat( this.getAttribute(this.threshold) );
+        }
+
+        return val;
     }
 
     connectedCallback() {
@@ -15,7 +27,7 @@ export default class ScrollContainer extends HTMLElement {
 
         const observerSettings = {
             root: this,
-            threshold: '0.6'
+            threshold: this.threshold
         }
 
         if ('IntersectionObserver' in window) {
@@ -24,17 +36,17 @@ export default class ScrollContainer extends HTMLElement {
 
                 items.forEach(entry => {
 
-                    entry.target.classList.remove('visible')
+                    entry.target.classList.remove('visible');
 
                     if (!entry.isIntersecting) {
                         return
                     }
-                    entry.target.classList.add('visible')
+                    entry.target.classList.add('visible');
 
                 })
             }
 
-            this._observer = new IntersectionObserver(callback, observerSettings)
+            this._observer = new IntersectionObserver(callback, observerSettings);
             this._items.forEach( item => this._observer.observe( item ) );
 
         } else {
