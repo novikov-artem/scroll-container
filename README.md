@@ -39,11 +39,26 @@ Add attribute `scrollbar="off"` for remove scrollbar
 
 Class `.scroll-item` required for each item
 
-## Example
+## Examples
 
+Default usage
 ```html
-
 <scroll-container scrollbar="off" class="scroll-container">
+    <div class="scroll-item"></div>
+    <div class="scroll-item"></div>
+</scroll-container>
+```
+
+
+Custom template
+```html
+<scroll-container scrollbar="off" class="scroll-container">
+    <template shadowroot="open">
+        <h2>Best sales</h2>
+        <div class="loop">
+            <slot></slot>
+        </div>
+    </template>
     <div class="scroll-item"></div>
     <div class="scroll-item"></div>
 </scroll-container>
