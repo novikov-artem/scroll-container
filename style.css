@@ -5,6 +5,7 @@ scroll-container {
     --scroller-bg: transparent;
 
     display: flex;
+    gap: var(--items-offset, 1rem);;
     overflow-x: scroll;
     flex: 0 0 100%;
 
@@ -17,12 +18,19 @@ scroll-container {
     scroll-snap-points-x: repeat(100%);
     scroll-snap-type: x mandatory;
 
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+
     background-color: var(--scroller-bg);
 }
-scroll-container[scrollbar="false"] {
+
+
+
+scroll-container[scrollbar="off"] {
     scrollbar-width: none;
 }
-scroll-container[scrollbar="false"]::-webkit-scrollbar {
+
+scroll-container[scrollbar="off"]::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
@@ -32,17 +40,28 @@ scroll-container .scroll-item {
     flex: 0 0 var(--item-size, 100%);
     flex-direction: column;
 
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
     scroll-snap-align: center;
 
     background-color: var(--item-bg, transparent);
 }
 
-scroll-container .scroll-item + .scroll-item {
-    margin-left: var(--items-offset, 1rem);
+/* BUG FIX */
+/* @see https://bugs.chromium.org/p/chromium/issues/detail?id=1069614 */
+scroll-container ::after {
+    --items-offset: 1.5rem;
+}
+
+scroll-container > .scroll-item:last-child {
+    position: relative;
+}
+
+scroll-container > .scroll-item:last-child::after {
+    content: "";
+    position: absolute;
+
+    inline-size: var(--fix-offset, --items-offset);
+    block-size: 100%;
+
+    inset-block-start: 0;
+    inset-inline-end: calc(var(--fix-offset, --items-offset) * -1);
 }
