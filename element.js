@@ -1,9 +1,7 @@
 export default class ScrollContainer extends HTMLElement {
+    _observer = null;
     constructor() {
         super();
-
-        this._items = [];
-        this._observer = null;
 
     }
 
@@ -18,12 +16,11 @@ export default class ScrollContainer extends HTMLElement {
         return threshold;
     }
 
+    set threshold(value) {
+        this.setAttribute( 'threshold', parseFloat( value ) );
+    }
+
     connectedCallback() {
-
-        let items = this.querySelectorAll('.scroll-item');
-        if( ! items ) return;
-
-        items.forEach( item => this._items.push( item ) );
 
         const observerSettings = {
             root: this,
@@ -36,22 +33,34 @@ export default class ScrollContainer extends HTMLElement {
 
                 items.forEach(entry => {
 
-                    entry.target.classList.remove('visible');
+                    let element = entry.target;
+
+                    element.classList.remove('visible');
 
                     if (!entry.isIntersecting) {
-                        return
+                        return;
                     }
-                    entry.target.classList.add('visible');
+
+                    element.classList.add('visible');
 
                 })
             }
 
-            this._observer = new IntersectionObserver(callback, observerSettings);
-            this._items.forEach( item => this._observer.observe( item ) );
+            this._observer = new IntersectionObserver(callback, observerSettings)
+
+            for (const key in this.children) {
+
+                if (Object.hasOwnProperty.call(this.children, key)) {
+
+                    this._observer.observe( this.children[key] );
+
+                }
+            }
 
         } else {
-            // Fallback
-            Array.prototype.forEach.call(items, function (s) {
+
+            // Fallback ???
+            Array.prototype.forEach.call(this.children, function (s) {
 
             })
 
@@ -59,10 +68,19 @@ export default class ScrollContainer extends HTMLElement {
     }
 
     disconnectedCallback() {
+
         /**
          * remove the observer
          */
-        this._items.forEach( item => this._observer.unobserve( item ) );
+        for (const key in this.children) {
+
+            if (Object.hasOwnProperty.call(this.children, key)) {
+
+                this._observer.observe( this.children[key] );
+
+            }
+        }
+
     }
 
 }
