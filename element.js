@@ -8,14 +8,14 @@ export default class ScrollContainer extends HTMLElement {
     }
 
     get threshold() {
-        let val = '0.6';
+        let threshold = '0.6';
 
-        let hasAttr = this.getAttribute('threshhold');
-        if( hasAttr ) {
-            val = parseFloat( this.getAttribute(this.threshold) );
+        let customThreshold = this.getAttribute('threshold');
+        if( customThreshold ) {
+            threshold = parseFloat( customThreshold );
         }
 
-        return val;
+        return threshold;
     }
 
     connectedCallback() {
