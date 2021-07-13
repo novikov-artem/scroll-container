@@ -1,7 +1,7 @@
 scroll-container {
     --item-size: 100%;
-    --item-bg: var(--clr-placeholder);
-    --items-offset: 1.5rem;
+    --item-bg: var(--clr-placeholder, transparent);
+    --items-offset: 1rem;
     --scroller-bg: transparent;
 
     display: flex;
@@ -42,7 +42,7 @@ scroll-container .scroll-item {
 
     scroll-snap-align: center;
 
-    background-color: var(--item-bg, transparent);
+    background-color: var(--item-bg);
 }
 
 /* BUG FIX */
