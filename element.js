@@ -1,8 +1,8 @@
 export default class ScrollContainer extends HTMLElement {
-    _observer = null;
     constructor() {
         super();
 
+        this._observer = null;
     }
 
     get threshold() {
