@@ -1,4 +1,4 @@
-export default class ScrollContainer extends HTMLElement {
+class ScrollContainer extends HTMLElement {
     constructor() {
         super();
 
@@ -83,4 +83,8 @@ export default class ScrollContainer extends HTMLElement {
 
     }
 
+}
+
+export {
+    ScrollContainer
 }
