@@ -1,8 +1,4 @@
 scroll-container {
-    --item-size: 100%;
-    --item-bg: var(--clr-placeholder, transparent);
-    --items-offset: 1rem;
-    --scroller-bg: transparent;
 
     display: flex;
     gap: var(--items-offset, 1rem);;
@@ -21,7 +17,7 @@ scroll-container {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
 
-    background-color: var(--scroller-bg);
+    background-color: var(--scroller-bg, transparent);
 }
 
 
@@ -42,15 +38,11 @@ scroll-container .scroll-item {
 
     scroll-snap-align: center;
 
-    background-color: var(--item-bg);
+    background-color: var(--item-bg, transparent);
 }
 
 /* BUG FIX */
 /* @see https://bugs.chromium.org/p/chromium/issues/detail?id=1069614 */
-scroll-container ::after {
-    --items-offset: 1.5rem;
-}
-
 scroll-container > .scroll-item:last-child {
     position: relative;
 }
@@ -59,9 +51,9 @@ scroll-container > .scroll-item:last-child::after {
     content: "";
     position: absolute;
 
-    inline-size: var(--fix-offset, --items-offset);
+    inline-size: var(--fix-offset, var(--items-offset, 1rem));
     block-size: 100%;
 
     inset-block-start: 0;
-    inset-inline-end: calc(var(--fix-offset, --items-offset) * -1);
+    inset-inline-end: calc(var(--fix-offset, var(--items-offset, 1rem)) * -1);
 }

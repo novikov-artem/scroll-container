@@ -1,6 +1,6 @@
 {
   "name": "scroll-container",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Scroll container based on css and web components",
   "main": "element.js",
   "style": "style.css",
