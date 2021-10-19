@@ -76,7 +76,7 @@ class ScrollContainer extends HTMLElement {
 
             if (Object.hasOwnProperty.call(this.children, key)) {
 
-                this._observer.observe( this.children[key] );
+                this._observer.disconnect( this.children[key] );
 
             }
         }
