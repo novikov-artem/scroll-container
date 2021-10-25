@@ -22,62 +22,67 @@ class ScrollContainer extends HTMLElement {
 
     connectedCallback() {
 
-        const observerSettings = {
-            root: this,
-            threshold: this.threshold
-        }
+        if( this.hasAttribute( 'watch' ) ) {
+            const observerSettings = {
+                root: this,
+                threshold: this.threshold
+            }
 
-        if ('IntersectionObserver' in window) {
+            if ('IntersectionObserver' in window) {
 
-            const callback = (items, observer) => {
+                const callback = (items, observer) => {
 
-                items.forEach(entry => {
+                    items.forEach(entry => {
 
-                    let element = entry.target;
+                        let element = entry.target;
 
-                    element.classList.remove('visible');
+                        element.classList.remove('visible');
 
-                    if (!entry.isIntersecting) {
-                        return;
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+
+                        element.classList.add('visible');
+
+                    })
+                }
+
+                this._observer = new IntersectionObserver(callback, observerSettings)
+
+                for (const key in this.children) {
+
+                    if (Object.hasOwnProperty.call(this.children, key)) {
+
+                        this._observer.observe( this.children[key] );
+
                     }
+                }
 
-                    element.classList.add('visible');
+            } else {
+
+                // Fallback ???
+                Array.prototype.forEach.call(this.children, function (s) {
 
                 })
+
             }
-
-            this._observer = new IntersectionObserver(callback, observerSettings)
-
-            for (const key in this.children) {
-
-                if (Object.hasOwnProperty.call(this.children, key)) {
-
-                    this._observer.observe( this.children[key] );
-
-                }
-            }
-
-        } else {
-
-            // Fallback ???
-            Array.prototype.forEach.call(this.children, function (s) {
-
-            })
-
         }
+
     }
 
     disconnectedCallback() {
 
-        /**
-         * remove the observer
-         */
-        for (const key in this.children) {
+        if( this.hasAttribute( 'watch' ) ) {
+            /**
+             * remove the observer
+             */
+            for (const key in this.children) {
 
-            if (Object.hasOwnProperty.call(this.children, key)) {
+                if (Object.hasOwnProperty.call(this.children, key)) {
 
-                this._observer.disconnect( this.children[key] );
+                    this._observer.disconnect( this.children[key] );
 
+                }
             }
         }
 
